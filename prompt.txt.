@@ -1,0 +1,333 @@
+. Why did you use a 2D array canvas[ROWS][COLS]?
+
+Answer:
+The 2D array represents the drawing area. Each element stores either _ (empty space) or * (part of a shape).
+
+2. Why is initCanvas() needed?
+
+Answer:
+It initializes the canvas by filling all positions with _ so that previous drawings are removed before redrawing.
+
+3. What is the purpose of the Shape structure?
+
+Answer:
+The structure stores information about each shape:
+
+type identifies the shape (line, rectangle, circle, triangle).
+p[] stores the coordinates and dimensions of the shape.
+4. Why is MAXOBJ defined as 50?
+
+Answer:
+It limits the maximum number of shapes that can be stored in the editor to 50.
+
+5. Why do we use the plot() function?
+
+Answer:
+plot() places a * at a specific coordinate and checks boundaries to prevent accessing invalid array positions.
+
+6. What is the purpose of boundary checking in plot()?
+if(x >= 0 && x < ROWS && y >= 0 && y < COLS)
+
+Answer:
+It ensures that drawing happens only inside the canvas and prevents runtime errors.
+
+7. Why is abs() used in drawLine()?
+int dx = abs(x2 - x1);
+int dy = abs(y2 - y1);
+
+Answer:
+abs() returns the positive value of a number. It helps calculate distances regardless of direction.
+
+Example:
+
+abs(-5) = 5
+8. What is steps in the line drawing function?
+
+Answer:
+steps determines how many points need to be plotted. It is the larger of horizontal distance (dx) and vertical distance (dy).
+
+9. Why are xInc and yInc float values?
+
+Answer:
+They represent the amount by which x and y coordinates change at each step. Decimal values are needed for smooth line drawing.
+
+10. How does drawRectangle() work?
+
+Answer:
+A rectangle is drawn using four lines:
+
+Top side
+Bottom side
+Left side
+Right side
+11. Why is drawLine() called four times in drawRectangle()?
+
+Answer:
+Because a rectangle consists of four edges.
+
+12. How is the circle drawn?
+
+Answer:
+The program checks every point on the canvas and verifies whether it satisfies the circle equation:
+
+(x−x
+c
+	​
+
+)
+2
++(y−y
+c
+	​
+
+)
+2
+=r
+2
+
+Points close to the circle boundary are plotted.
+
+13. Why do we use this condition?
+if(abs(d - r*r) <= r)
+
+Answer:
+Since exact equality is difficult with integer coordinates, a tolerance (<= r) is used to make the circle appear continuous.
+
+14. How is a triangle drawn?
+
+Answer:
+The triangle is drawn by connecting three vertices using three line segments.
+
+15. What does redraw() do?
+
+Answer:
+It clears the canvas and redraws all shapes stored in the shapes array.
+
+16. Why do we redraw everything after deleting a shape?
+
+Answer:
+The canvas only stores characters. After deleting a shape, the entire picture must be recreated from the remaining shapes.
+
+17. Why is count used?
+
+Answer:
+count keeps track of how many shapes are currently stored.
+
+18. How does addShape() work?
+
+Answer:
+It:
+
+Asks the user to choose a shape.
+Reads its coordinates.
+Stores the information in the shapes array.
+Increments count.
+19. What happens if count exceeds MAXOBJ?
+
+Answer:
+The program may access memory outside the array bounds. A check should be added:
+
+if(count >= MAXOBJ)
+    printf("Shape limit reached");
+20. How does deleteShape() work?
+
+Answer:
+After selecting an index, all shapes after that index are shifted one position left.
+
+Example:
+
+Before:
+0 Rectangle
+1 Circle
+2 Line
+
+Delete index 1
+
+After:
+0 Rectangle
+1 Line
+21. Why is shifting necessary after deletion?
+
+Answer:
+To remove the empty gap and keep the array continuous.
+
+22. How does modifyShape() work?
+
+Answer:
+It asks for an object index and allows the user to enter new coordinates for that shape.
+
+23. Why don't we directly erase characters from the canvas when deleting?
+
+Answer:
+Different shapes may overlap. Erasing directly could remove parts of other shapes. Therefore, the canvas is redrawn from stored shape data.
+
+24. What is the time complexity of drawCircle()?
+
+Answer:
+It checks all canvas points:
+
+O(ROWS×COLS)
+
+For a 20×40 canvas:
+
+20×40=800
+
+checks.
+
+25. Why are shapes stored separately from the canvas?
+
+Answer:
+The canvas only shows the final picture. The shape array stores object information needed for modification, deletion, and redrawing.
+
+26. Can multiple shapes overlap?
+
+Answer:
+Yes. If multiple shapes occupy the same position, the character remains *.
+
+27. What are the menu options available in the program?
+
+Answer:
+
+1. Add Object
+2. Delete Object
+3. Modify Object
+4. Display Picture
+5. Exit
+28. Why is do-while used in main()?
+
+Answer:
+It ensures the menu is displayed at least once and continues until the user chooses Exit.
+
+29. What is the purpose of switch(choice)?
+
+Answer:
+It executes the appropriate operation based on the user's menu selection.
+
+30. What is the overall working of the program?
+
+Answer:
+
+User selects a shape and enters coordinates.
+Shape information is stored in the shapes array.
+redraw() draws all stored shapes on the canvas.
+User can display, modify, or delete shapes.
+The picture is updated accordingly.
+how to get coordinates with getting shpes
+
+In your program, the coordinates depend on the shape selected. When the user chooses a shape, scanf() reads the required coordinates and stores them in shapes[count].p[].
+
+1. Line Coordinates
+
+A line needs 2 points:
+
+printf("Enter x1 y1 x2 y2: ");
+scanf("%d%d%d%d",
+      &shapes[count].p[0],
+      &shapes[count].p[1],
+      &shapes[count].p[2],
+      &shapes[count].p[3]);
+
+Example:
+
+Enter x1 y1 x2 y2: 2 5 10 20
+
+Meaning:
+
+Start point = (2,5)
+End point = (10,20)
+2. Rectangle Coordinates
+
+A rectangle needs:
+
+Top-left corner (x,y)
+Width
+Height
+printf("Enter x y width height: ");
+scanf("%d%d%d%d",
+      &shapes[count].p[0],
+      &shapes[count].p[1],
+      &shapes[count].p[2],
+      &shapes[count].p[3]);
+
+Example:
+
+Enter x y width height: 3 4 10 5
+
+Meaning:
+
+Top-left corner = (3,4)
+Width = 10
+Height = 5
+3. Circle Coordinates
+
+A circle needs:
+
+Center point (xc,yc)
+Radius r
+printf("Enter centerX centerY radius: ");
+scanf("%d%d%d",
+      &shapes[count].p[0],
+      &shapes[count].p[1],
+      &shapes[count].p[2]);
+
+Example:
+
+Enter centerX centerY radius: 10 15 4
+
+Meaning:
+
+Center = (10,15)
+Radius = 4
+4. Triangle Coordinates
+
+A triangle needs 3 vertices:
+
+printf("Enter x1 y1 x2 y2 x3 y3: ");
+scanf("%d%d%d%d%d%d",
+      &shapes[count].p[0],
+      &shapes[count].p[1],
+      &shapes[count].p[2],
+      &shapes[count].p[3],
+      &shapes[count].p[4],
+      &shapes[count].p[5]);
+
+Example:
+
+Enter x1 y1 x2 y2 x3 y3: 2 5 8 15 15 5
+
+Meaning:
+
+Vertex 1 = (2,5)
+Vertex 2 = (8,15)
+Vertex 3 = (15,5)
+Canvas Coordinate System
+
+For a canvas:
+
+     y →
+      0 1 2 3 4 5 ...
+x 0  _ _ _ _ _ _
+↓ 1  _ _ _ _ _ _
+  2  _ _ _ _ _ _
+  3  _ _ _ _ _ _
+x = row number
+y = column number
+
+For example:
+
+plot(2,5);
+
+places * at:
+
+Row = 2
+Column = 5
+Example Input Sequence
+1.Add Object
+Enter shape: 1
+Enter x1 y1 x2 y2: 2 2 10 20
+
+1.Add Object
+Enter shape: 3
+Enter centerX centerY radius: 8 15 4
+
+4.Display Picture
