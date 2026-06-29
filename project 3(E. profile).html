@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hive Design</title>
+
+<style>
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:#222;
+}
+
+.hive{
+    display:grid;
+    grid-template-columns:repeat(4,100px);
+    gap:10px;
+}
+
+.hexagon{
+    width:100px;
+    height:115px;
+    background:#f4c542;
+    clip-path:polygon(
+        50% 0%,
+        100% 25%,
+        100% 75%,
+        50% 100%,
+        0% 75%,
+        0% 25%
+    );
+}
+
+.hexagon:nth-child(even){
+    background:#ffb300;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="hive">
+<div class="hexagon"></div>
+<div class="hexagon"></div>
+<div class="hexagon"></div>
+<div class="hexagon"></div>
+
+<div class="hexagon"></div>
+<div class="hexagon"></div>
+<div class="hexagon"></div>
+<div class="hexagon"></div>
+</div>
+
+</body>
+</html>
