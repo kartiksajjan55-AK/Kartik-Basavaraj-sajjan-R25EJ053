@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIVE Network | Live News</title>
+    <style>
+        /* Global Resets & Theme */
+        * {
+            margin: 0;
+            padding: 0;
+            box-box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: #111;
+            border-bottom: 3px solid #f4c542;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #f4c542;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #fff;
+            background: #ffb300;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #f4c542;
+        }
+
+        /* Live Breaking News Ticker */
+        .ticker-wrap {
+            background: #ffb300;
+            color: #111;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            font-weight: bold;
+            display: flex;
+        }
+
+        .ticker-title {
+            background: #d32f2f;
+            color: white;
+            padding: 0 20px;
+            position: absolute;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+
+        .ticker-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 25s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* Integration of YOUR Hive Design */
+        .hero-hive-section {
+            background: #222;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-left: 5px solid #f4c542;
+        }
+
+        .hive-title {
+            align-self: flex-start;
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #f4c542;
+            text-transform: uppercase;
+        }
+
+        .hive {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 10px;
+        }
+
+        .hexagon {
+            width: 100px;
+            height: 115px;
+            background: #f4c542;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #111;
+            font-weight: bold;
+            font-size: 12px;
+            text-align: center;
+            padding: 5px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .hexagon:hover {
+            transform: scale(1.05);
+        }
+
+        .hexagon:nth-child(even) {
+            background: #ffb300;
+        }
+
+        /* News Cards & Feed */
+        .news-feed h2, .sidebar h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .news-card {
+            background: #222;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            display: flex;
+            transition: transform 0.2s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-2px);
+            background: #2a2a2a;
+        }
+
+        .news-img {
+            width: 200px;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .news-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .news-tag {
+            background: #d32f2f;
+            color: white;
+            padding: 2px 6px;
+            font-size: 11px;
+            text-transform: uppercase;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .news-time {
+            font-size: 12px;
+            color: #888;
+            margin-left: 10px;
+        }
+
+        .news-content h3 {
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .news-content h3:hover {
+            color: #f4c542;
+            cursor: pointer;
+        }
+
+        /* Sidebar Elements */
+        .sidebar-panel {
+            background: #222;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #d32f2f;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .stream-box {
+            width: 100%;
+            height: 180px;
+            background: #000;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        /* Responsive adjustments */
+        @media (
